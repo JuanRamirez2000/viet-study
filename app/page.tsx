@@ -1,3 +1,9 @@
+import Keyboard from "./_components/Keyboard";
+
 export default function Home() {
-  return <main></main>;
+  return (
+    <main>
+      <Keyboard />
+    </main>
+  );
 }
