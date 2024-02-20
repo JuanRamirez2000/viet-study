@@ -1,13 +1,38 @@
 "use client";
 
-import { KeyboardEvent, useState } from "react";
+import { ChangeEvent, KeyboardEvent, useState } from "react";
+import translations from "@/app/data/telexRules";
 
 export default function Keyboard() {
   const [activeKeys, setActiveKeys] = useState([""]);
+  const [inputString, setInputString] = useState("");
+  const parseInput = (input: string): string => {
+    if (input.length === 1) {
+      return input;
+    }
+
+    const lastTwoChar = input.slice(-2);
+    const translated = translations.find(
+      (translation) => lastTwoChar === translation.eng
+    );
+    if (translated) {
+      const finalString = input.slice(0, -2) + translated.viet;
+      return finalString;
+    }
+
+    return input;
+  };
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    const parsedValue = parseInput(e.target.value);
+    setInputString(parsedValue);
+  };
 
   const logKeyCapture = (e: KeyboardEvent) => {
-    setActiveKeys((prev) => [...prev, e.key.toLowerCase()]);
     if (e.code === "Space") setActiveKeys((prev) => [...prev, "space"]);
+    if (e.key === "Enter") setInputString("");
+    setActiveKeys((prev) => [...prev, e.key.toLowerCase()]);
   };
 
   const removeKeyCapture = (e: KeyboardEvent) => {
@@ -21,87 +46,15 @@ export default function Keyboard() {
   };
 
   return (
-    <section>
-      <input type="text" onKeyDown={logKeyCapture} onKeyUp={removeKeyCapture} />
-      <div className="kbd-row">
-        <kbd
-          className={`kbd-key ${
-            activeKeys.includes("1") ? "kbd-key-active" : ""
-          }`}
-        >
-          1
-        </kbd>
-        <kbd
-          className={`kbd-key ${
-            activeKeys.includes("2") ? "kbd-key-active" : ""
-          }`}
-        >
-          2
-        </kbd>
-        <kbd
-          className={`kbd-key ${
-            activeKeys.includes("3") ? "kbd-key-active" : ""
-          }`}
-        >
-          3
-        </kbd>
-        <kbd
-          className={`kbd-key ${
-            activeKeys.includes("4") ? "kbd-key-active" : ""
-          }`}
-        >
-          4
-        </kbd>
-        <kbd
-          className={`kbd-key ${
-            activeKeys.includes("5") ? "kbd-key-active" : ""
-          }`}
-        >
-          5
-        </kbd>
-        <kbd
-          className={`kbd-key ${
-            activeKeys.includes("6") ? "kbd-key-active" : ""
-          }`}
-        >
-          6
-        </kbd>
-        <kbd
-          className={`kbd-key ${
-            activeKeys.includes("7") ? "kbd-key-active" : ""
-          }`}
-        >
-          7
-        </kbd>
-        <kbd
-          className={`kbd-key ${
-            activeKeys.includes("8") ? "kbd-key-active" : ""
-          }`}
-        >
-          8
-        </kbd>
-        <kbd
-          className={`kbd-key ${
-            activeKeys.includes("9") ? "kbd-key-active" : ""
-          }`}
-        >
-          9
-        </kbd>
-        <kbd
-          className={`kbd-key ${
-            activeKeys.includes("0") ? "kbd-key-active" : ""
-          }`}
-        >
-          0
-        </kbd>
-        <kbd
-          className={`kbd-key ${
-            activeKeys.includes("backspace") ? "kbd-key-active" : ""
-          }`}
-        >
-          backspace
-        </kbd>
-      </div>
+    <section className="max-w-2xl ">
+      <input
+        type="text"
+        onKeyDown={logKeyCapture}
+        onKeyUp={removeKeyCapture}
+        value={inputString}
+        onChange={handleChange}
+        className="w-full my-8 text-6xl rounded-lg bg-slate-600 ring-2 ring-sky-400 caret-sky-400 px-4 py-4"
+      />
       <div className="kbd-row">
         <kbd
           className={`kbd-key ${
@@ -173,6 +126,13 @@ export default function Keyboard() {
         >
           p
         </kbd>
+        <kbd
+          className={`kbd-key ${
+            activeKeys.includes("backspace") ? "kbd-key-active" : ""
+          }`}
+        >
+          backspace
+        </kbd>
       </div>
       <div className="kbd-row">
         <kbd
@@ -239,7 +199,7 @@ export default function Keyboard() {
           l
         </kbd>
         <kbd
-          className={`kbd-key ${
+          className={`kbd-key w-24 ${
             activeKeys.includes("enter") ? "kbd-key-active" : ""
           }`}
         >
@@ -327,7 +287,7 @@ export default function Keyboard() {
       </div>
       <div className="kbd-row">
         <kbd
-          className={`kbd-key ${
+          className={`kbd-key w-full ${
             activeKeys.includes("space") ? "kbd-key-active" : ""
           }`}
         >

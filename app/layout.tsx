@@ -11,12 +11,17 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  cheatSheet,
 }: Readonly<{
   children: React.ReactNode;
+  cheatSheet: React.ReactNode;
 }>) {
   return (
     <html lang="en" className="bg-slate-800 text-slate-100">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className + "flex flex-col"}>
+        {children}
+        {/* cheatSheet */}
+      </body>
     </html>
   );
 }

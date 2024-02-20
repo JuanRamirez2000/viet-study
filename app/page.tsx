@@ -2,8 +2,7 @@ import Keyboard from "./_components/Keyboard";
 
 export default function Home() {
   return (
-    <main>
-      <h1 className="text-7xl">a</h1>
+    <main className="h-screen w-full flex flex-col items-center justify-center">
       <Keyboard />
     </main>
   );
