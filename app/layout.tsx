@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider } from "@/components/ThemeProvider";
+import { DarkModeToggle } from "@/components/DarkModeToggle";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,8 +17,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="bg-slate-800 text-slate-100">
-      <body className={inter.className + "flex flex-col"}>{children}</body>
+    <html lang="en" suppressHydrationWarning>
+      <body className={inter.className}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <DarkModeToggle />
+          {children}
+        </ThemeProvider>
+      </body>
     </html>
   );
 }
