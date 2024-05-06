@@ -17,11 +17,13 @@ Frontend Tech
 Backend tech
 
 - NextJS (app Directory)
+- DrizzleORM
 - ClerkJS
 
 Infra
 
 - Vercel
+- Supabase
 
 
 ## Current and Future Additions:
