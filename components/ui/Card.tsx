@@ -27,7 +27,7 @@ const CardButton = forwardRef<HTMLButtonElement, CardButtonProps>(
     <button
       ref={ref}
       className={cn(
-        "absolute z-10 hover:scale-110 duration-200 hover:bg-sky-300 bg-zinc-50 rounded-xl",
+        "absolute z-10 hover:scale-110 duration-200 hover:bg-sky-300 bg-zinc-50 rounded-xl dark:bg-zinc-700",
         className
       )}
       {...props}
@@ -44,7 +44,7 @@ const CardDesciption = forwardRef<HTMLDivElement, CardDesciption>(
     <div
       ref={ref}
       className={cn(
-        "rounded-xl border shadow flex items-center justify-center bg-sky-100 text-sky-950 cursor-pointer relative w-full h-full",
+        "rounded-xl border shadow flex items-center justify-center bg-sky-100 text-sky-950 dark:bg-sky-300 cursor-pointer relative w-full h-full",
         className
       )}
       {...props}
