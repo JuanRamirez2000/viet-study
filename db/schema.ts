@@ -51,6 +51,7 @@ export const card = pgTable("cards", {
   nextTimeShown: date("next_time_shown", { mode: "date" }),
   confidenceScore: smallint("confidence_score").default(3),
   deckIn: integer("deck_in").references(() => deck.id),
+  lastStudied: date("last_studied").defaultNow(),
 });
 
 export const cardRelations = relations(card, ({ one }) => ({

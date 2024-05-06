@@ -1,0 +1,1 @@
+ALTER TABLE "cards" ADD COLUMN "last_studied" date DEFAULT now();

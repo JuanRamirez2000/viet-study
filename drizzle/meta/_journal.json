@@ -15,6 +15,13 @@
       "when": 1714923895036,
       "tag": "0001_sparkling_carnage",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1714948324172,
+      "tag": "0002_foamy_slayback",
+      "breakpoints": true
     }
   ]
 }

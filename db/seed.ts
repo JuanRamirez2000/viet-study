@@ -31,6 +31,7 @@ const main = async () => {
       backText: faker.lorem.word(),
       nextTimeShown: faker.date.soon(),
       confidenceScore: faker.number.int({ min: 1, max: 5 }),
+      lastStudied: new Date().toUTCString(),
       deckIn: deckData.id!,
     });
 

@@ -2,46 +2,58 @@
 
 import { cn } from "@/lib/utils";
 import { card } from "@/db/schema";
-import { useState } from "react";
-import { Edit2Icon, StarIcon } from "lucide-react";
+import { forwardRef } from "react";
 
-type CardProps = {
+interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   className: string;
   card: typeof card.$inferSelect;
   sideShown?: "front" | "back";
-};
+}
 
-export default function Card({
-  className,
-  card,
-  sideShown = "front",
-}: CardProps) {
-  const [side, setSide] = useState(sideShown);
+interface CardButtonProps extends React.HtmlHTMLAttributes<HTMLButtonElement> {}
 
-  const handleSideChange = () => {
-    setSide((prev) => (prev === "front" ? "back" : "front"));
-  };
+interface CardDesciption extends React.HTMLAttributes<HTMLDivElement> {}
 
-  return (
-    <div
+const Card = forwardRef<HTMLDivElement, CardProps>(
+  ({ sideShown, className, ...props }, ref) => (
+    <div ref={ref} className={cn("relative", className)} {...props} />
+  )
+);
+
+Card.displayName = "Card";
+
+const CardButton = forwardRef<HTMLButtonElement, CardButtonProps>(
+  ({ className, children, ...props }, ref) => (
+    <button
+      ref={ref}
       className={cn(
-        "rounded-xl border shadow flex items-center justify-center bg-sky-100 text-sky-950 cursor-pointer relative",
+        "absolute z-10 hover:scale-110 duration-200 hover:bg-sky-300 bg-zinc-50 rounded-xl",
         className
       )}
-      onClick={handleSideChange}
+      {...props}
     >
-      <div className="absolute top-1 right-1 z-10 hover:scale-110 duration-200 hover:bg-sky-300 bg-zinc-50 rounded-xl">
-        <Edit2Icon className="size-8 p-2 bg-transparent" />
-      </div>
-      <div className="absolute top-1 left-1 z-10 hover:scale-110 duration-200 hover:bg-sky-300 bg-zinc-50 rounded-xl">
-        <StarIcon className="size-8 p-2 bg-transparent" />
-      </div>
-      <p className={`${side === "front" ? "block" : "hidden"}`}>
-        {card.frontText}
-      </p>
-      <p className={`${side === "back" ? "block" : "hidden"}`}>
-        {card.backText}
-      </p>
+      {children}
+    </button>
+  )
+);
+
+CardButton.displayName = "CardButton";
+
+const CardDesciption = forwardRef<HTMLDivElement, CardDesciption>(
+  ({ className, children, ...props }, ref) => (
+    <div
+      ref={ref}
+      className={cn(
+        "rounded-xl border shadow flex items-center justify-center bg-sky-100 text-sky-950 cursor-pointer relative w-full h-full",
+        className
+      )}
+      {...props}
+    >
+      {children}
     </div>
-  );
-}
+  )
+);
+
+CardDesciption.displayName = "CardDescription";
+
+export { Card, CardButton, CardDesciption };
