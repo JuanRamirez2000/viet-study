@@ -16,7 +16,11 @@ interface CardDesciption extends React.HTMLAttributes<HTMLDivElement> {}
 
 const Card = forwardRef<HTMLDivElement, CardProps>(
   ({ sideShown, className, ...props }, ref) => (
-    <div ref={ref} className={cn("relative", className)} {...props} />
+    <div
+      ref={ref}
+      className={cn("relative text-zinc-950", className)}
+      {...props}
+    />
   )
 );
 
@@ -27,7 +31,7 @@ const CardButton = forwardRef<HTMLButtonElement, CardButtonProps>(
     <button
       ref={ref}
       className={cn(
-        "absolute z-10 hover:scale-110 duration-200 hover:bg-sky-300 bg-zinc-50 rounded-xl dark:bg-zinc-700",
+        "absolute z-10 hover:scale-110 duration-200 bg-zinc-200 rounded-xl",
         className
       )}
       {...props}
@@ -44,7 +48,7 @@ const CardDesciption = forwardRef<HTMLDivElement, CardDesciption>(
     <div
       ref={ref}
       className={cn(
-        "rounded-xl border shadow flex items-center justify-center bg-sky-100 text-sky-950 dark:bg-sky-300 cursor-pointer relative w-full h-full",
+        "rounded-xl border shadow flex items-center justify-center bg-zinc-50  cursor-pointer relative w-full h-full",
         className
       )}
       {...props}

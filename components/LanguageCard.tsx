@@ -10,6 +10,12 @@ import {
   DialogHeader,
   DialogTrigger,
 } from "./ui/dialog";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Form, FormControl, FormField, FormItem, FormLabel } from "./ui/form";
+import { Input } from "./ui/input";
+import { Button } from "./ui/Button";
 
 export default function LanguageCard({
   cardInfo,
@@ -25,7 +31,7 @@ export default function LanguageCard({
       <CardButton className="top-1 left-1">
         <StarIcon className="size-8 p-2 bg-transparent" />
       </CardButton>
-      <LanguageCardDialog cardInfo={cardInfo} />
+      <LanguageCardEditDialog cardInfo={cardInfo} />
       <CardDesciption onClick={handleCardFlip}>
         {faceShown === "front" ? cardInfo.frontText : cardInfo.backText}
       </CardDesciption>
@@ -33,11 +39,28 @@ export default function LanguageCard({
   );
 }
 
-function LanguageCardDialog({
+const languageCardEditFormSchema = z.object({
+  frontText: z.string(),
+  backText: z.string(),
+});
+
+function LanguageCardEditDialog({
   cardInfo,
 }: {
   cardInfo: typeof card.$inferInsert;
 }) {
+  const form = useForm<z.infer<typeof languageCardEditFormSchema>>({
+    resolver: zodResolver(languageCardEditFormSchema),
+    defaultValues: {
+      frontText: cardInfo.frontText,
+      backText: cardInfo.backText,
+    },
+  });
+
+  const onSubmit = (values: z.infer<typeof languageCardEditFormSchema>) => {
+    console.log(values);
+  };
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -47,7 +70,43 @@ function LanguageCardDialog({
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <h2>{cardInfo.frontText}</h2>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)}>
+              <FormField
+                control={form.control}
+                name="frontText"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Front Text</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Please put in your word or phrase"
+                        {...field}
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="backText"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Back Text</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Please put in your word or phrase"
+                        {...field}
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+              <Button type="submit" className="rounded-xl">
+                Submit
+              </Button>
+            </form>
+          </Form>
         </DialogHeader>
       </DialogContent>
     </Dialog>
