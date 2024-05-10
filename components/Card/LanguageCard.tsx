@@ -16,7 +16,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
 import { Input } from "../ui/input";
 import { Button } from "../ui/Button";
-import { editLanguageCard } from "./languageCardActions";
+import { deleteCard, editLanguageCard } from "./languageCardActions";
 import { useFormState } from "react-dom";
 import { toast } from "sonner";
 
@@ -53,6 +53,7 @@ const initalFormStatus = {
 };
 
 function LanguageCardEditDialog({ cardInfo }: { cardInfo: CardInfo }) {
+  const [open, setOpen] = useState(false);
   const [formStatusState, formAction] = useFormState(
     editLanguageCard,
     initalFormStatus
@@ -66,12 +67,17 @@ function LanguageCardEditDialog({ cardInfo }: { cardInfo: CardInfo }) {
     },
   });
 
+  const handleDelete = async () => {
+    const { status, message } = await deleteCard(cardInfo.id);
+    toast(message);
+  };
+
   useEffect(() => {
     toast(formStatusState.message);
   }, [formStatusState]);
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <CardButton className="absolute top-1 right-1">
           <Edit2Icon className="size-8 p-2 bg-transparent" />
@@ -80,7 +86,11 @@ function LanguageCardEditDialog({ cardInfo }: { cardInfo: CardInfo }) {
       <DialogContent>
         <DialogHeader>
           <Form {...form}>
-            <form action={formAction} className="space-y-4">
+            <form
+              action={formAction}
+              onSubmit={() => setOpen(false)}
+              className="space-y-4"
+            >
               <FormField
                 control={form.control}
                 name="frontText"
@@ -114,9 +124,22 @@ function LanguageCardEditDialog({ cardInfo }: { cardInfo: CardInfo }) {
                 )}
               />
               <input type="hidden" name="cardId" value={cardInfo.id} />
-              <Button type="submit" className="rounded-xl">
-                Submit
-              </Button>
+              <div className="space-x-2">
+                <Button type="submit" className="rounded-xl">
+                  Submit
+                </Button>
+                <Button
+                  type="button"
+                  variant={"error"}
+                  onClick={async () => {
+                    await handleDelete();
+                    setOpen(false);
+                  }}
+                  className="rounded-xl border-red-400 hover:bg-red-300"
+                >
+                  Delete
+                </Button>
+              </div>
             </form>
           </Form>
         </DialogHeader>

@@ -12,14 +12,21 @@ const languageCardEditFormSchema = z.object({
   backText: z.string(),
 });
 
-async function editLanguageCard(prevState: any, formData: FormData) {
+type LanguageCardActionsReturnType = {
+  status: "Error" | "Success";
+  message: string;
+};
+
+async function editLanguageCard(
+  prevState: any,
+  formData: FormData
+): Promise<LanguageCardActionsReturnType> {
   const validatedFields = languageCardEditFormSchema.safeParse({
     frontText: formData.get("frontText"),
     backText: formData.get("backText"),
     cardId: formData.get("cardId"),
   });
 
-  console.log(prevState);
   if (!validatedFields.success) {
     return {
       status: "Error",
@@ -49,4 +56,26 @@ async function editLanguageCard(prevState: any, formData: FormData) {
   };
 }
 
-export { editLanguageCard };
+async function deleteCard(
+  cardId: number
+): Promise<LanguageCardActionsReturnType> {
+  if (!cardId) {
+    return {
+      status: "Error",
+      message: "No ID was provided",
+    };
+  }
+
+  const deleteCard = await db
+    .delete(card)
+    .where(eq(card.id, cardId))
+    .returning();
+
+  revalidatePath("/");
+  return {
+    status: "Success",
+    message: "Deleted card",
+  };
+}
+
+export { editLanguageCard, deleteCard };
