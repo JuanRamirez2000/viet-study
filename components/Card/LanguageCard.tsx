@@ -9,19 +9,24 @@ import {
   DialogContent,
   DialogHeader,
   DialogTrigger,
-} from "./ui/dialog";
+} from "../ui/dialog";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Form, FormControl, FormField, FormItem, FormLabel } from "./ui/form";
-import { Input } from "./ui/input";
-import { Button } from "./ui/Button";
+import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
+import { Input } from "../ui/input";
+import { Button } from "../ui/Button";
+import { editLanguageCard } from "./languageCardActions";
 
-export default function LanguageCard({
-  cardInfo,
-}: {
-  cardInfo: typeof card.$inferSelect;
-}) {
+const languageCardEditFormSchema = z.object({
+  frontText: z.string(),
+  backText: z.string(),
+});
+
+type LanguageCardForm = z.infer<typeof languageCardEditFormSchema>;
+type CardInfo = typeof card.$inferSelect;
+
+export default function LanguageCard({ cardInfo }: { cardInfo: CardInfo }) {
   const [faceShown, setFaceShown] = useState<"front" | "back">("front");
   const handleCardFlip = () => {
     setFaceShown((prev) => (prev === "front" ? "back" : "front"));
@@ -39,27 +44,16 @@ export default function LanguageCard({
   );
 }
 
-const languageCardEditFormSchema = z.object({
-  frontText: z.string(),
-  backText: z.string(),
-});
+function LanguageCardEditDialog({ cardInfo }: { cardInfo: CardInfo }) {
+  const editCardWithId = editLanguageCard.bind(null, cardInfo.id);
 
-function LanguageCardEditDialog({
-  cardInfo,
-}: {
-  cardInfo: typeof card.$inferInsert;
-}) {
-  const form = useForm<z.infer<typeof languageCardEditFormSchema>>({
+  const form = useForm<LanguageCardForm>({
     resolver: zodResolver(languageCardEditFormSchema),
     defaultValues: {
       frontText: cardInfo.frontText,
       backText: cardInfo.backText,
     },
   });
-
-  const onSubmit = (values: z.infer<typeof languageCardEditFormSchema>) => {
-    console.log(values);
-  };
 
   return (
     <Dialog>
@@ -71,7 +65,7 @@ function LanguageCardEditDialog({
       <DialogContent>
         <DialogHeader>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)}>
+            <form action={editCardWithId} className="space-y-4">
               <FormField
                 control={form.control}
                 name="frontText"
@@ -81,6 +75,7 @@ function LanguageCardEditDialog({
                     <FormControl>
                       <Input
                         placeholder="Please put in your word or phrase"
+                        className="text-lg font-semibold"
                         {...field}
                       />
                     </FormControl>
@@ -96,6 +91,7 @@ function LanguageCardEditDialog({
                     <FormControl>
                       <Input
                         placeholder="Please put in your word or phrase"
+                        className="text-lg font-semibold"
                         {...field}
                       />
                     </FormControl>
@@ -112,3 +108,6 @@ function LanguageCardEditDialog({
     </Dialog>
   );
 }
+
+export type { LanguageCardForm };
+export { languageCardEditFormSchema };

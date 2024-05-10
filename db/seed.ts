@@ -24,7 +24,7 @@ const main = async () => {
   const cardsData: (typeof card.$inferSelect)[] = [];
   const notesData: (typeof note.$inferSelect)[] = [];
 
-  for (let i = 0; i < 20; i++) {
+  for (let i = 0; i < 5; i++) {
     cardsData.push({
       id: faker.number.int({ max: 1000000 }),
       frontText: faker.lorem.word(),

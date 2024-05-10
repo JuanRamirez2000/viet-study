@@ -1,4 +1,4 @@
-import LanguageCard from "@/components/LanguageCard";
+import LanguageCard from "@/components/Card/LanguageCard";
 import { Card, CardButton, CardDesciption } from "@/components/ui/Card";
 import { db } from "@/db";
 import { card } from "@/db/schema";
