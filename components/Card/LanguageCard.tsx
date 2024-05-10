@@ -3,7 +3,7 @@
 import { Card, CardButton, CardDesciption } from "@/components/ui/Card";
 import { Edit2Icon, StarIcon } from "lucide-react";
 import { card } from "@/db/schema";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -17,10 +17,13 @@ import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
 import { Input } from "../ui/input";
 import { Button } from "../ui/Button";
 import { editLanguageCard } from "./languageCardActions";
+import { useFormState } from "react-dom";
+import { toast } from "sonner";
 
 const languageCardEditFormSchema = z.object({
   frontText: z.string(),
   backText: z.string(),
+  cardId: z.string(),
 });
 
 type LanguageCardForm = z.infer<typeof languageCardEditFormSchema>;
@@ -44,16 +47,28 @@ export default function LanguageCard({ cardInfo }: { cardInfo: CardInfo }) {
   );
 }
 
-function LanguageCardEditDialog({ cardInfo }: { cardInfo: CardInfo }) {
-  const editCardWithId = editLanguageCard.bind(null, cardInfo.id);
+const initalFormStatus = {
+  status: "",
+  message: "",
+};
 
+function LanguageCardEditDialog({ cardInfo }: { cardInfo: CardInfo }) {
+  const [formStatusState, formAction] = useFormState(
+    editLanguageCard,
+    initalFormStatus
+  );
   const form = useForm<LanguageCardForm>({
     resolver: zodResolver(languageCardEditFormSchema),
     defaultValues: {
       frontText: cardInfo.frontText,
       backText: cardInfo.backText,
+      cardId: cardInfo.id.toString(),
     },
   });
+
+  useEffect(() => {
+    toast(formStatusState.message);
+  }, [formStatusState]);
 
   return (
     <Dialog>
@@ -65,7 +80,7 @@ function LanguageCardEditDialog({ cardInfo }: { cardInfo: CardInfo }) {
       <DialogContent>
         <DialogHeader>
           <Form {...form}>
-            <form action={editCardWithId} className="space-y-4">
+            <form action={formAction} className="space-y-4">
               <FormField
                 control={form.control}
                 name="frontText"
@@ -98,6 +113,7 @@ function LanguageCardEditDialog({ cardInfo }: { cardInfo: CardInfo }) {
                   </FormItem>
                 )}
               />
+              <input type="hidden" name="cardId" value={cardInfo.id} />
               <Button type="submit" className="rounded-xl">
                 Submit
               </Button>
