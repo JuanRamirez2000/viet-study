@@ -21,7 +21,6 @@ import { toast } from "sonner";
 import {
   LanguageCardForm,
   LanguageCardStatus,
-  languageCardAddFormSchema,
   languageCardEditFormSchema,
 } from "./LanguageCardTypes";
 

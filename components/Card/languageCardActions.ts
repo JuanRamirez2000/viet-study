@@ -11,7 +11,7 @@ import {
 } from "./LanguageCardTypes";
 
 async function editLanguageCard(
-  prevState: any,
+  prevState: LanguageCardStatus,
   formData: FormData
 ): Promise<LanguageCardStatus> {
   const validatedFields = languageCardEditFormSchema.safeParse({
@@ -50,7 +50,7 @@ async function editLanguageCard(
 }
 
 async function addCard(
-  prevState: any,
+  prevState: LanguageCardStatus,
   formData: FormData
 ): Promise<Omit<LanguageCardStatus, "cardID">> {
   const validatedFields = languageCardAddFormSchema.safeParse({
