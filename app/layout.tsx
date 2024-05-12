@@ -28,7 +28,7 @@ export default function RootLayout({
         >
           {/* <DarkModeToggle /> */}
           {children}
-          <Toaster />
+          <Toaster richColors={true} />
         </ThemeProvider>
       </body>
     </html>

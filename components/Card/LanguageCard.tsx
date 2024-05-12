@@ -66,12 +66,23 @@ function LanguageCardEditDialog({ cardInfo }: { cardInfo: CardInfo }) {
 
   const handleDelete = async () => {
     const { status, message } = await deleteCard(cardInfo.id);
-    toast(message);
+    if (status === "Error") {
+      toast.error(message);
+    }
+    if (message !== "" && status === "Success") {
+      toast.success(message);
+    }
   };
 
   useEffect(() => {
-    if (formStatusState.message !== "") {
-      toast(formStatusState.message);
+    if (formStatusState.status === "Error") {
+      toast.error(formStatusState.message);
+    }
+    if (
+      formStatusState.message !== "" &&
+      formStatusState.status === "Success"
+    ) {
+      toast.success(formStatusState.message);
     }
   }, [formStatusState]);
 

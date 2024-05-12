@@ -44,10 +44,14 @@ export default function AddCard() {
   );
 
   useEffect(() => {
-    if (formStatusState.message !== "") {
-      toast(formStatusState.message);
+    if (formStatusState.status === "Error") {
+      toast.error(formStatusState.message);
     }
-    if (formStatusState.status === "Success") {
+    if (
+      formStatusState.message !== "" &&
+      formStatusState.status === "Success"
+    ) {
+      toast.success(formStatusState.message);
       setOpen(false);
     }
   }, [formStatusState]);
