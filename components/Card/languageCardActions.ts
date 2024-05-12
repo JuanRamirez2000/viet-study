@@ -4,23 +4,16 @@ import { db } from "@/db";
 import { card } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
-import { z } from "zod";
-
-const languageCardEditFormSchema = z.object({
-  cardId: z.string(),
-  frontText: z.string(),
-  backText: z.string(),
-});
-
-type LanguageCardActionsReturnType = {
-  status: "Error" | "Success";
-  message: string;
-};
+import {
+  languageCardAddFormSchema,
+  languageCardEditFormSchema,
+  LanguageCardStatus,
+} from "./LanguageCardTypes";
 
 async function editLanguageCard(
   prevState: any,
   formData: FormData
-): Promise<LanguageCardActionsReturnType> {
+): Promise<LanguageCardStatus> {
   const validatedFields = languageCardEditFormSchema.safeParse({
     frontText: formData.get("frontText"),
     backText: formData.get("backText"),
@@ -56,9 +49,35 @@ async function editLanguageCard(
   };
 }
 
-async function deleteCard(
-  cardId: number
-): Promise<LanguageCardActionsReturnType> {
+async function addCard(
+  prevState: any,
+  formData: FormData
+): Promise<Omit<LanguageCardStatus, "cardID">> {
+  const validatedFields = languageCardAddFormSchema.safeParse({
+    frontText: formData.get("frontText"),
+    backText: formData.get("backText"),
+  });
+
+  if (!validatedFields.success) {
+    return {
+      status: "Error",
+      message: "Something went wrong adding the cards",
+    };
+  }
+
+  await db.insert(card).values({
+    frontText: validatedFields.data.frontText,
+    backText: validatedFields.data.backText,
+  });
+
+  revalidatePath("/");
+  return {
+    status: "Success",
+    message: "Added card",
+  };
+}
+
+async function deleteCard(cardId: number): Promise<LanguageCardStatus> {
   if (!cardId) {
     return {
       status: "Error",
@@ -66,10 +85,7 @@ async function deleteCard(
     };
   }
 
-  const deleteCard = await db
-    .delete(card)
-    .where(eq(card.id, cardId))
-    .returning();
+  await db.delete(card).where(eq(card.id, cardId)).returning();
 
   revalidatePath("/");
   return {
@@ -78,4 +94,4 @@ async function deleteCard(
   };
 }
 
-export { editLanguageCard, deleteCard };
+export { editLanguageCard, deleteCard, addCard };

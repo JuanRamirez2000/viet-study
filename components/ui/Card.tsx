@@ -6,7 +6,7 @@ import { forwardRef } from "react";
 
 interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   className: string;
-  card: typeof card.$inferSelect;
+  card?: typeof card.$inferSelect;
   sideShown?: "front" | "back";
 }
 
@@ -48,7 +48,7 @@ const CardDesciption = forwardRef<HTMLDivElement, CardDesciption>(
     <div
       ref={ref}
       className={cn(
-        "rounded-xl border shadow flex items-center justify-center bg-zinc-50  cursor-pointer relative w-full h-full",
+        "rounded-xl border shadow flex items-center justify-center bg-zinc-50 cursor-pointer relative w-full h-full",
         className
       )}
       {...props}

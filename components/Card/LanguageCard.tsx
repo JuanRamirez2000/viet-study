@@ -10,7 +10,6 @@ import {
   DialogHeader,
   DialogTrigger,
 } from "../ui/dialog";
-import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
@@ -19,14 +18,13 @@ import { Button } from "../ui/Button";
 import { deleteCard, editLanguageCard } from "./languageCardActions";
 import { useFormState } from "react-dom";
 import { toast } from "sonner";
+import {
+  LanguageCardForm,
+  LanguageCardStatus,
+  languageCardAddFormSchema,
+  languageCardEditFormSchema,
+} from "./LanguageCardTypes";
 
-const languageCardEditFormSchema = z.object({
-  frontText: z.string(),
-  backText: z.string(),
-  cardId: z.string(),
-});
-
-type LanguageCardForm = z.infer<typeof languageCardEditFormSchema>;
 type CardInfo = typeof card.$inferSelect;
 
 export default function LanguageCard({ cardInfo }: { cardInfo: CardInfo }) {
@@ -47,8 +45,8 @@ export default function LanguageCard({ cardInfo }: { cardInfo: CardInfo }) {
   );
 }
 
-const initalFormStatus = {
-  status: "",
+const initalFormStatus: LanguageCardStatus = {
+  status: "Success",
   message: "",
 };
 
@@ -73,7 +71,9 @@ function LanguageCardEditDialog({ cardInfo }: { cardInfo: CardInfo }) {
   };
 
   useEffect(() => {
-    toast(formStatusState.message);
+    if (formStatusState.message !== "") {
+      toast(formStatusState.message);
+    }
   }, [formStatusState]);
 
   return (
@@ -147,6 +147,3 @@ function LanguageCardEditDialog({ cardInfo }: { cardInfo: CardInfo }) {
     </Dialog>
   );
 }
-
-export type { LanguageCardForm };
-export { languageCardEditFormSchema };
