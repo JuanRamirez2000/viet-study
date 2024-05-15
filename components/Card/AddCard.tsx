@@ -61,7 +61,7 @@ export default function AddCard() {
       <DialogTrigger asChild>
         <Card className="size-44 flex flex-col items-center justify-center">
           <CardDesciption>
-            <PlusIcon className="size-12" />
+            <PlusIcon className="size-12 " />
           </CardDesciption>
         </Card>
       </DialogTrigger>

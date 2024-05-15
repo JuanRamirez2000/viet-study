@@ -29,6 +29,31 @@ export const note = pgTable("note", {
   journalIn: integer("journal_in").references(() => journal.id),
 });
 
+export const problemSet = pgTable("problem_set", {
+  id: serial("id").primaryKey(),
+});
+
+export const problemSetRelations = relations(problemSet, ({ many }) => ({
+  questionAnswers: many(questionAnswerCombo),
+}));
+
+export const questionAnswerCombo = pgTable("question_answer", {
+  id: serial("id").primaryKey(),
+  question: text("question"),
+  answer: text("answer"),
+  problemSetIn: integer("problem_set_in").references(() => problemSet.id),
+});
+
+export const questionAnswerComboRelations = relations(
+  questionAnswerCombo,
+  ({ one }) => ({
+    problemSet: one(problemSet, {
+      fields: [questionAnswerCombo.problemSetIn],
+      references: [problemSet.id],
+    }),
+  })
+);
+
 export const noteRelations = relations(note, ({ one }) => ({
   journal: one(journal, {
     fields: [note.journalIn],
