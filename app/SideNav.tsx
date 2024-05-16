@@ -1,31 +1,73 @@
+"use client";
+
 import {
-  GraduationCap,
+  Home,
   Languages,
+  LibraryBig,
   MessageCircleQuestion,
   NotebookPen,
 } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 export default function SideNav({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
+  console.log(pathname);
   return (
-    <div className="h-screen w-full flex flex-row bg-sky-50">
-      <nav className="h-full w-64 border-r-2 border-sky-200 flex flex-col items-center py-16 gap-16">
+    <div className="w-full flex flex-row bg-sky-50">
+      <nav className="w-64 border-r-2 border-sky-200 flex flex-col items-center py-16 gap-16">
         <Languages className="size-16 p-4 bg-sky-200 rounded-2xl" />
         <ul className="w-5/6 space-y-3.5">
-          <li className="px-4 py-3 rounded-2xl inline-flex bg-sky-200 w-full">
-            <GraduationCap className="mr-5 size-6" />
+          <li className="relative px-4 py-3 rounded-2xl inline-flex w-full cursor-pointer hover:scale-105 duration-150 bg-sky-200">
+            <Home className="mr-5 size-6" />
+            Home
+            {pathname === "/" && (
+              <span className="absolute top-0 right-0">
+                <span className="relative flex h-3 w-3">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-sky-500"></span>
+                </span>
+              </span>
+            )}
+          </li>
+          <li className="relative px-4 py-3 rounded-2xl inline-flex w-full cursor-pointer hover:scale-105 duration-150 bg-sky-200">
+            <LibraryBig className="mr-5 size-6" />
             Cards
+            {pathname.includes("card") && (
+              <span className="absolute top-0 right-0">
+                <span className="relative flex h-3 w-3">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-sky-500"></span>
+                </span>
+              </span>
+            )}
           </li>
-          <li className="px-4 py-3 rounded-2xl inline-flex bg-sky-200 w-full">
+          <li className="relative px-4 py-3 rounded-2xl inline-flex w-full cursor-pointer hover:scale-105 duration-150 bg-sky-200">
             <NotebookPen className="mr-5 size-6" />
-            NoteBooks
+            Notebooks
+            {pathname.includes("notebook") && (
+              <span className="absolute top-0 right-0">
+                <span className="relative flex h-3 w-3">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-sky-500"></span>
+                </span>
+              </span>
+            )}
           </li>
-          <li className="px-4 py-3 rounded-2xl inline-flex bg-sky-200 w-full">
+          <li className="relative px-4 py-3 rounded-2xl inline-flex w-full cursor-pointer hover:scale-105 duration-150 bg-sky-200">
             <MessageCircleQuestion className="mr-5 size-6" />
             Assignments
+            {pathname.includes("assignment") && (
+              <span className="absolute top-0 right-0">
+                <span className="relative flex h-3 w-3">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-sky-500"></span>
+                </span>
+              </span>
+            )}
           </li>
         </ul>
       </nav>
-      <main className="h-full w-full grow p-16">{children}</main>
+      <main className="grow p-16 h-fit">{children}</main>
     </div>
   );
 }
