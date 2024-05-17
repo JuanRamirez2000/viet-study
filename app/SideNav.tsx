@@ -2,6 +2,7 @@
 
 import {
   Home,
+  Info,
   Languages,
   LibraryBig,
   MessageCircleQuestion,
@@ -66,6 +67,12 @@ export default function SideNav({ children }: { children: React.ReactNode }) {
             )}
           </li>
         </ul>
+        <div className="grow flex flex-col justify-end w-5/6">
+          <p className="relative px-4 py-3 rounded-2xl inline-flex w-full cursor-pointer hover:scale-105 duration-150 bg-sky-200">
+            <Info className="mr-5 size-6" />
+            About
+          </p>
+        </div>
       </nav>
       <main className="grow p-16">{children}</main>
     </div>
