@@ -22,6 +22,13 @@
       "when": 1714948324172,
       "tag": "0002_foamy_slayback",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1715926399590,
+      "tag": "0003_wet_wolf_cub",
+      "breakpoints": true
     }
   ]
 }

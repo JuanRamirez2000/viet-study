@@ -15,7 +15,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
 import { Input } from "../ui/input";
 import { Button } from "../ui/Button";
-import { deleteCard, editLanguageCard } from "./languageCardActions";
+import {
+  changeFavoriteCard,
+  deleteCard,
+  editLanguageCard,
+} from "./languageCardActions";
 import { useFormState } from "react-dom";
 import { toast } from "sonner";
 import {
@@ -33,8 +37,17 @@ export default function LanguageCard({ cardInfo }: { cardInfo: CardInfo }) {
   };
   return (
     <Card className="size-44" card={cardInfo}>
-      <CardButton className="top-1.5 left-1.5">
-        <StarIcon className="size-8 p-2 bg-transparent" />
+      <CardButton
+        className="top-1.5 left-1.5"
+        onClick={async () => {
+          await changeFavoriteCard(cardInfo);
+        }}
+      >
+        <StarIcon
+          className={`size-8 p-2  ${
+            cardInfo.favorited ? "fill-yellow-400" : "bg-transparent"
+          }`}
+        />
       </CardButton>
       <LanguageCardEditDialog cardInfo={cardInfo} />
       <CardDesciption onClick={handleCardFlip}>

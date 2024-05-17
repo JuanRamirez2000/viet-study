@@ -6,6 +6,7 @@ import {
   smallint,
   serial,
   integer,
+  boolean,
 } from "drizzle-orm/pg-core";
 
 export const users = pgTable("users", {
@@ -77,6 +78,7 @@ export const card = pgTable("cards", {
   confidenceScore: smallint("confidence_score").default(3),
   deckIn: integer("deck_in").references(() => deck.id),
   lastStudied: date("last_studied").defaultNow(),
+  favorited: boolean("favorited").default(false),
 });
 
 export const cardRelations = relations(card, ({ one }) => ({

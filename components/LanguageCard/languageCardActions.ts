@@ -94,4 +94,25 @@ async function deleteCard(cardId: number): Promise<LanguageCardStatus> {
   };
 }
 
-export { editLanguageCard, deleteCard, addCard };
+async function changeFavoriteCard(
+  cardInfo: typeof card.$inferSelect
+): Promise<LanguageCardStatus> {
+  if (!cardInfo) {
+    return {
+      status: "Error",
+      message: "No card was provided",
+    };
+  }
+  await db
+    .update(card)
+    .set({ favorited: !cardInfo.favorited })
+    .where(eq(card.id, cardInfo.id));
+  revalidatePath("/");
+
+  return {
+    status: "Success",
+    message: "Changed card status",
+  };
+}
+
+export { editLanguageCard, deleteCard, addCard, changeFavoriteCard };

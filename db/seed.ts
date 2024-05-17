@@ -33,6 +33,7 @@ const main = async () => {
       confidenceScore: faker.number.int({ min: 1, max: 5 }),
       lastStudied: new Date().toUTCString(),
       deckIn: deckData.id!,
+      favorited: false,
     });
 
     notesData.push({

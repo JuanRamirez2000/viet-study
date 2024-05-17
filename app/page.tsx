@@ -1,5 +1,5 @@
-import AddCard from "@/components/Card/AddCard";
-import LanguageCard from "@/components/Card/LanguageCard";
+import AddCard from "@/components/LanguageCard/AddLanguageCard";
+import LanguageCard from "@/components/LanguageCard/LanguageCard";
 import { db } from "@/db";
 import { card } from "@/db/schema";
 
