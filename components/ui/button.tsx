@@ -12,7 +12,9 @@ const buttonVariants = cva(
         default:
           "bg-zinc-300 shadow hover:bg-zinc-400 hover:scale-110 duration-150",
         error:
-          "bg-red-50 text-red-950 hover:bg-red-300 border-red-400 border-2 hover:scale-110 duration-150 transition-all",
+          "bg-red-50 text-red-950 hover:bg-red-100 border-red-200 border-2 hover:scale-105 duration-150 transition-all",
+        success:
+          "bg-emerald-50 text-emerald-950 hover:bg-emerald-100 border-emerald-200 border-2 hover:scale-105 duration-150 transition-all",
       },
 
       size: {

@@ -33,7 +33,7 @@ export default function LanguageCard({ cardInfo }: { cardInfo: CardInfo }) {
   };
   return (
     <Card className="size-44" card={cardInfo}>
-      <CardButton className="top-1 left-1">
+      <CardButton className="top-1.5 left-1.5">
         <StarIcon className="size-8 p-2 bg-transparent" />
       </CardButton>
       <LanguageCardEditDialog cardInfo={cardInfo} />
@@ -89,7 +89,7 @@ function LanguageCardEditDialog({ cardInfo }: { cardInfo: CardInfo }) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <CardButton className="absolute top-1 right-1">
+        <CardButton className="absolute top-1.5 right-1.5">
           <Edit2Icon className="size-8 p-2 bg-transparent" />
         </CardButton>
       </DialogTrigger>
@@ -135,7 +135,11 @@ function LanguageCardEditDialog({ cardInfo }: { cardInfo: CardInfo }) {
               />
               <input type="hidden" name="cardId" value={cardInfo.id} />
               <div className="space-x-2">
-                <Button type="submit" className="rounded-xl">
+                <Button
+                  type="submit"
+                  className={`rounded-xl`}
+                  variant={"success"}
+                >
                   Submit
                 </Button>
                 <Button
@@ -145,7 +149,7 @@ function LanguageCardEditDialog({ cardInfo }: { cardInfo: CardInfo }) {
                     await handleDelete();
                     setOpen(false);
                   }}
-                  className="rounded-xl border-red-400 hover:bg-red-300"
+                  className="rounded-xl "
                 >
                   Delete
                 </Button>

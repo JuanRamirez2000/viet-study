@@ -102,7 +102,11 @@ export default function AddCard() {
                 )}
               />
               <div className="space-x-2">
-                <Button type="submit" className="rounded-xl">
+                <Button
+                  type="submit"
+                  className="rounded-xl"
+                  variant={"success"}
+                >
                   Submit
                 </Button>
               </div>
