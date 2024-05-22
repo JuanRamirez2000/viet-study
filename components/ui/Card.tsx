@@ -31,7 +31,7 @@ const CardButton = forwardRef<HTMLButtonElement, CardButtonProps>(
     <button
       ref={ref}
       className={cn(
-        "absolute z-10 hover:scale-110 duration-200 bg-sky-200 rounded-xl",
+        "absolute z-10 hover:scale-110 duration-200 bg-secondary-200 rounded-xl",
         className
       )}
       {...props}
