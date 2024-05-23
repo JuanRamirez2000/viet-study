@@ -12,14 +12,13 @@ import { usePathname } from "next/navigation";
 
 export default function SideNav({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  console.log(pathname);
   return (
-    <div className="w-full flex bg-slate-50">
-      <nav className="w-64 flex flex-col items-center top-0 py-16 gap-16 sticky h-[95vh] m-5 bg-primary-100 rounded-xl shadow-lg text-primary-950">
-        <Languages className="size-16 p-4 bg-primary-400 rounded-2xl" />
-        <ul className="w-5/6 space-y-3.5">
-          <li className="relative px-4 py-3 rounded-2xl inline-flex w-full cursor-pointer hover:scale-105 duration-150 bg-primary-400">
-            <Home className="mr-5 size-6" />
+    <div className="w-full flex flex-col-reverse sm:flex-row bg-slate-50 h-screen">
+      <nav className="w-[95vw] h-16 sm:w-64 flex sm:flex-col items-center justify-around sm:justify-start bottom-0 sm:top-0 py-10 sm:gap-16 sticky sm:h-[95vh] m-2 sm:m-5 bg-primary-100 rounded-xl shadow-lg text-primary-950 ">
+        <Languages className="size-16 p-4 bg-primary-400 rounded-2xl hidden sm:block" />
+        <ul className="sm:w-5/6 w-[95%] flex flex-row sm:flex-col gap-4">
+          <li className="relative px-4 py-3 rounded-2xl inline-flex flex-col text-xs sm:text-base sm:flex-row items-center w-full cursor-pointer hover:scale-105 duration-150 bg-primary-400">
+            <Home className="sm:mr-5 size-4 sm:size-6" />
             Home
             {pathname === "/" && (
               <span className="absolute top-0 right-0">
@@ -30,8 +29,8 @@ export default function SideNav({ children }: { children: React.ReactNode }) {
               </span>
             )}
           </li>
-          <li className="relative px-4 py-3 rounded-2xl inline-flex w-full cursor-pointer hover:scale-105 duration-150 bg-primary-400">
-            <LibraryBig className="mr-5 size-6" />
+          <li className="relative px-4 py-3 rounded-2xl inline-flex flex-col text-xs sm:text-base sm:flex-row items-center w-full cursor-pointer hover:scale-105 duration-150 bg-primary-400">
+            <LibraryBig className="sm:mr-5 size-4 sm:size-6" />
             Cards
             {pathname.includes("card") && (
               <span className="absolute top-0 right-0">
@@ -42,9 +41,9 @@ export default function SideNav({ children }: { children: React.ReactNode }) {
               </span>
             )}
           </li>
-          <li className="relative px-4 py-3 rounded-2xl inline-flex w-full cursor-pointer hover:scale-105 duration-150 bg-primary-400">
-            <NotebookPen className="mr-5 size-6" />
-            Notebooks
+          <li className="relative px-4 py-3 rounded-2xl inline-flex flex-col text-xs sm:text-base sm:flex-row items-center w-full cursor-pointer hover:scale-105 duration-150 bg-primary-400">
+            <NotebookPen className="sm:mr-5 size-4 sm:size-6" />
+            Notes
             {pathname.includes("notebook") && (
               <span className="absolute top-0 right-0">
                 <span className="relative flex h-3 w-3">
@@ -54,10 +53,10 @@ export default function SideNav({ children }: { children: React.ReactNode }) {
               </span>
             )}
           </li>
-          <li className="relative px-4 py-3 rounded-2xl inline-flex w-full cursor-pointer hover:scale-105 duration-150 bg-primary-400">
-            <MessageCircleQuestion className="mr-5 size-6" />
-            Assignments
-            {pathname.includes("assignment") && (
+          <li className="relative px-4 py-3 rounded-2xl inline-flex flex-col text-xs sm:text-base sm:flex-row items-center w-full cursor-pointer hover:scale-105 duration-150 bg-primary-400">
+            <MessageCircleQuestion className="sm:mr-5 size-4 sm:size-6" />
+            About
+            {pathname.includes("about") && (
               <span className="absolute top-0 right-0">
                 <span className="relative flex h-3 w-3">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary-400 opacity-75"></span>
@@ -67,12 +66,6 @@ export default function SideNav({ children }: { children: React.ReactNode }) {
             )}
           </li>
         </ul>
-        <div className="grow flex flex-col justify-end w-5/6">
-          <p className="relative px-4 py-3 rounded-2xl inline-flex w-full cursor-pointer hover:scale-105 duration-150 bg-primary-400">
-            <Info className="mr-5 size-6" />
-            About
-          </p>
-        </div>
       </nav>
       <main className="grow p-16">{children}</main>
     </div>
