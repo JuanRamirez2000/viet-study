@@ -15,7 +15,7 @@ export default function SideNav({ children }: { children: React.ReactNode }) {
   console.log(pathname);
   return (
     <div className="w-full flex bg-slate-50">
-      <nav className="w-64 flex flex-col items-center py-16 gap-16 sticky h-[95vh] m-5 bg-primary-100 rounded-xl shadow-lg">
+      <nav className="w-64 flex flex-col items-center top-0 py-16 gap-16 sticky h-[95vh] m-5 bg-primary-100 rounded-xl shadow-lg text-primary-950">
         <Languages className="size-16 p-4 bg-primary-400 rounded-2xl" />
         <ul className="w-5/6 space-y-3.5">
           <li className="relative px-4 py-3 rounded-2xl inline-flex w-full cursor-pointer hover:scale-105 duration-150 bg-primary-400">
