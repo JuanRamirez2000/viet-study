@@ -5,5 +5,12 @@ import { card } from "@/db/schema";
 
 export default async function Home() {
   const cards = await db.select().from(card);
-  return <main></main>;
+  return (
+    <main>
+      <AddCard />
+      {cards.map((card) => (
+        <LanguageCard cardInfo={card} key={card.id} />
+      ))}
+    </main>
+  );
 }

@@ -13,8 +13,8 @@ import { usePathname } from "next/navigation";
 export default function SideNav({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   return (
-    <div className="w-full flex flex-col-reverse sm:flex-row bg-slate-50 h-screen">
-      <nav className="w-[95vw] h-16 sm:w-64 flex sm:flex-col items-center justify-around sm:justify-start bottom-0 sm:top-0 py-10 sm:gap-16 sticky sm:h-[95vh] m-2 sm:m-5 bg-primary-100 rounded-xl shadow-lg text-primary-950 ">
+    <div className="w-full flex flex-col-reverse sm:flex-row bg-slate-50 min-h-screen">
+      <nav className="w-[95vw] h-16 sm:w-64 flex sm:flex-col items-center justify-around sm:justify-start bottom-0 sm:top-0 py-10 sm:gap-16 sticky sm:h-[95vh] m-2 sm:m-5 bg-primary-100 rounded-xl shadow-lg text-primary-950 z-50">
         <Languages className="size-16 p-4 bg-primary-400 rounded-2xl hidden sm:block" />
         <ul className="sm:w-5/6 w-[95%] flex flex-row sm:flex-col gap-4">
           <li className="relative px-4 py-3 rounded-2xl inline-flex flex-col text-xs sm:text-base sm:flex-row items-center w-full cursor-pointer hover:scale-105 duration-150 bg-primary-400">
@@ -67,7 +67,7 @@ export default function SideNav({ children }: { children: React.ReactNode }) {
           </li>
         </ul>
       </nav>
-      <main className="grow p-16">{children}</main>
+      <main className="grow p-16 h-fit">{children}</main>
     </div>
   );
 }
