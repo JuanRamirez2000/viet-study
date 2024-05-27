@@ -1,6 +1,7 @@
 "use client";
 
 import { useEditor, EditorContent, Editor } from "@tiptap/react";
+import { Node } from "@tiptap/core";
 import StarterKit from "@tiptap/starter-kit";
 import { Button } from "./ui/Button";
 import {
@@ -10,10 +11,36 @@ import {
   Heading2,
   Heading3,
   Italic,
+  Languages,
   List,
   ListOrdered,
   Strikethrough,
 } from "lucide-react";
+import { note } from "@/db/schema";
+
+type NoteContent = typeof note.$inferInsert;
+
+const Tiptap = ({ initialContent }: { initialContent: NoteContent | null }) => {
+  const editor = useEditor({
+    extensions: [StarterKit],
+    content: initialContent ? initialContent.noteDescription : "",
+    editorProps: {
+      attributes: {
+        class: "min-h-16 bg-slate-50 rounded-xl p-3 shadow-md",
+      },
+    },
+  });
+
+  if (!editor) return null;
+
+  return (
+    <div className="max-w-5xl space-y-2 bg-primary-100 p-4 rounded-xl">
+      <h1 className="text-xl font-semibold">{initialContent?.noteTitle}</h1>
+      <MenuBar editor={editor} />
+      <EditorContent editor={editor} />
+    </div>
+  );
+};
 
 const MenuBar = ({ editor }: { editor: Editor | null }) => {
   if (!editor) return null;
@@ -81,28 +108,21 @@ const MenuBar = ({ editor }: { editor: Editor | null }) => {
       >
         <ListOrdered className="size-4" />
       </Button>
+      <Button
+        onClick={() => editor.chain().focus().toggleOrderedList().run()}
+        variant={editor.isActive("orderedList") ? "defaultActive" : "default"}
+      >
+        <Languages className="size-4" />
+      </Button>
     </div>
   );
 };
 
-const Tiptap = () => {
-  const editor = useEditor({
-    extensions: [StarterKit],
-    editorProps: {
-      attributes: {
-        class: "min-h-16 bg-slate-50 rounded-xl p-3 shadow-md",
-      },
-    },
-  });
-
-  if (!editor) return null;
-
-  return (
-    <div className="max-w-5xl min-w-fit space-y-2 bg-primary-100 p-4 rounded-xl">
-      <MenuBar editor={editor} />
-      <EditorContent editor={editor} />
-    </div>
-  );
-};
+const TranslationNode = Node.create({
+  name: "TranslationNode",
+  content: "paragraph+",
+  marks: "",
+  group: "block",
+});
 
 export default Tiptap;

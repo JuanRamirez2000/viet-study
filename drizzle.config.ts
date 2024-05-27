@@ -12,8 +12,8 @@ if (!process.env.SUPABASE_DATABASE_URL) {
 export default {
   schema: "./db/schema.ts",
   out: "./drizzle",
-  driver: "pg",
+  dialect: "postgresql",
   dbCredentials: {
-    connectionString: process.env.SUPABASE_DATABASE_URL,
+    url: process.env.SUPABASE_DATABASE_URL,
   },
 } satisfies Config;

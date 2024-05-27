@@ -1,14 +1,17 @@
-import AddCard from "@/components/LanguageCard/AddLanguageCard";
-import LanguageCard from "@/components/LanguageCard/LanguageCard";
+import Note from "@/components/Note/Note";
 import Tiptap from "@/components/TipTap";
 import { db } from "@/db";
-import { card } from "@/db/schema";
+import { note } from "@/db/schema";
 
 export default async function Home() {
-  const cards = await db.select().from(card);
+  const notes = await db.select().from(note);
   return (
     <section>
-      <Tiptap />
+      <ul className="space-y-2">
+        {notes.map((note) => {
+          return <Note noteContent={note} key={note.id} />;
+        })}
+      </ul>
     </section>
   );
 }
